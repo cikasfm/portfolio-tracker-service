@@ -6,22 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"-->
-<!--          rel="stylesheet"-->
-<!--          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"-->
-<!--          crossorigin="anonymous">-->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"-->
+    <!--          rel="stylesheet"-->
+    <!--          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"-->
+    <!--          crossorigin="anonymous">-->
     <link rel="stylesheet" href="bootstrap.min.css">
 
     <title>Portfolio Tracker Service</title>
 </head>
 <body>
 <div class="container">
-    <header class="border-bottom">
+    <header class="border-bottom pt-5">
         <h1>Portfolio Tracker Service</h1>
     </header>
-    <main>
+    <main class="pt-3">
         <h2>Portfolio</h2>
         <div id="portfolio"></div>
+        <div class="row">
+            <div class="col-6">
+                <h2>Recent purchases</h2>
+                <div id="purchases"></div>
+            </div>
+            <div class="col-6">
+                <h2>Recent liquidations</h2>
+                <div id="liquidations"></div>
+            </div>
+        </div>
     </main>
     <footer class="border-top">
         <span>Copyright® 2021</span>
@@ -49,6 +59,9 @@
         crossorigin="anonymous"></script>
 
 <script type="text/x-handlebars-template" id="tpl-holdings">
+    <summary>
+        <h1>Total ${{summary.value}}</h1>
+    </summary>
     <table class="table pts-holdings">
         <thead>
         <tr>
@@ -63,10 +76,33 @@
         {{#each holdings}}
             <tr>
                 <th scope="row">{{stock}}</th>
-                <td>{{avgPrice}}</td>
-                <td>{{currentPrice}}</td>
+                <td>${{avgPrice}}</td>
+                <td>${{currentPrice}}</td>
                 <td>{{amount}}</td>
-                <td>{{value}}</td>
+                <td>${{value}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl-trades">
+    <table class="table pts-trades">
+        <thead>
+        <tr>
+            <th scope="col">Stock</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each trades}}
+            <tr>
+                <th scope="row">{{stock}}</th>
+                <td>${{price}}</td>
+                <td>{{quantity}}</td>
+                <td>${{value}}</td>
             </tr>
         {{/each}}
         </tbody>

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import lombok.Builder;
 import lombok.Data;
 
@@ -51,7 +52,7 @@ public class Trade {
      * @return timestamp
      **/
     @ApiModelProperty(value = "Date/Time of the transaction")
-    private String timestamp = null;
+    private final String timestamp;
 
     /**
      * Stock name
@@ -59,7 +60,7 @@ public class Trade {
      * @return stock
      **/
     @ApiModelProperty(value = "Stock name")
-    private String stock = null;
+    private final String stock;
 
     /**
      * Trade direction:  * `buy` - Stock purchase ( buy )  * `sell` - Stock liquidation ( sell )
@@ -67,7 +68,7 @@ public class Trade {
      * @return direction
      **/
     @ApiModelProperty(value = "Trade direction:  * `buy` - Stock purchase ( buy )  * `sell` - Stock liquidation ( sell ) ")
-    private DirectionEnum direction = null;
+    private final DirectionEnum direction;
 
 
     /**
@@ -76,7 +77,7 @@ public class Trade {
      * @return price
      **/
     @ApiModelProperty(value = "Stock price")
-    private BigDecimal price = null;
+    private final BigDecimal price;
 
     /**
      * Amount of stocks traded
@@ -84,7 +85,7 @@ public class Trade {
      * @return quantity
      **/
     @ApiModelProperty(value = "Amount of stocks traded")
-    private BigDecimal quantity = null;
+    private final BigDecimal quantity;
 
     /**
      * Total dollar value of stocks traded ( quantity * price )
@@ -92,7 +93,9 @@ public class Trade {
      * @return value
      **/
     @ApiModelProperty(value = "Total dollar value of stocks traded ( quantity * price )")
-    private BigDecimal value = null;
+    public BigDecimal getValue() {
+        return price.multiply(quantity).setScale(2, RoundingMode.HALF_UP);
+    }
 
 }
 
