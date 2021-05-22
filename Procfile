@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -cp target/classes:target/dependency/* org.vilutis.lt.pts.ActuatorServiceApplication
+web: java -Dserver.port=$PORT $JAVA_OPTS -cp target/classes:target/dependency/* org.vilutis.lt.pts.PortfolioTrackerServiceApplication

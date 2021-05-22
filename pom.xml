@@ -28,7 +28,7 @@
 
             ## Problem Statement
 
-            As a user invested in multiple stocks and tradeable equities, need a tool to track stock purchases/holdings/liquidation. The user should be notified if there is a significant daily drop in a specific equity ( say > 10% ) or overall portfolio. Design a a backend system that handles the data input, stock feeds, jobs and alerting. You may choose to implement one or more API or Job implementation depending on the time available. Please choose a implementation that works for you Development environment even though that is not what you might have designed for.
+            As a user invested in multiple stocks and tradeable equities, need a tool to track stock purchases/holdings/liquidation. The user should be notified if there is a significant daily drop in a specific equity ( say > 10% ) or overall portfolio. Design a a backend system that handles the data.json input, stock feeds, jobs and alerting. You may choose to implement one or more API or Job implementation depending on the time available. Please choose a implementation that works for you Development environment even though that is not what you might have designed for.
 
             ## Use Cases
 
@@ -50,11 +50,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
     </dependencies>
 
