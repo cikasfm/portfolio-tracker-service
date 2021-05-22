@@ -1,50 +1,40 @@
-package org.vilutis.lt.pts.dto;
+package org.vilutis.lt.pts.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Trade
  */
 @Data
+@Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class Trade {
 
-    /**
-     * Trade direction:  * `buy` - Stock purchase ( buy )  * `sell` - Stock liquidation ( sell )
-     */
-    public enum DirectionEnum {
-        BUY("buy"),
+    @Id
+    @Setter(AccessLevel.PROTECTED)
+    private String txId;
 
-        SELL("sell");
+    @NonNull
+    private String accountNumber;
 
-        private String value;
-
-        DirectionEnum(String value) {
-            this.value = value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return String.valueOf(value);
-        }
-
-        @JsonCreator
-        public static DirectionEnum fromValue(String text) {
-            for (DirectionEnum b : DirectionEnum.values()) {
-                if (String.valueOf(b.value).equals(text)) {
-                    return b;
-                }
-            }
-            return null;
-        }
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateTime;
 
     /**
      * Date/Time of the transaction
@@ -52,7 +42,8 @@ public class Trade {
      * @return timestamp
      **/
     @ApiModelProperty(value = "Date/Time of the transaction")
-    private final String timestamp;
+    @NonNull
+    private String timestamp;
 
     /**
      * Stock name
@@ -60,7 +51,8 @@ public class Trade {
      * @return stock
      **/
     @ApiModelProperty(value = "Stock name")
-    private final String stock;
+    @NonNull
+    private String stock;
 
     /**
      * Trade direction:  * `buy` - Stock purchase ( buy )  * `sell` - Stock liquidation ( sell )
@@ -68,7 +60,8 @@ public class Trade {
      * @return direction
      **/
     @ApiModelProperty(value = "Trade direction:  * `buy` - Stock purchase ( buy )  * `sell` - Stock liquidation ( sell ) ")
-    private final DirectionEnum direction;
+    @NonNull
+    private DirectionEnum direction;
 
 
     /**
@@ -77,7 +70,8 @@ public class Trade {
      * @return price
      **/
     @ApiModelProperty(value = "Stock price")
-    private final BigDecimal price;
+    @NonNull
+    private BigDecimal price;
 
     /**
      * Amount of stocks traded
@@ -85,7 +79,8 @@ public class Trade {
      * @return quantity
      **/
     @ApiModelProperty(value = "Amount of stocks traded")
-    private final BigDecimal quantity;
+    @NonNull
+    private BigDecimal quantity;
 
     /**
      * Total dollar value of stocks traded ( quantity * price )

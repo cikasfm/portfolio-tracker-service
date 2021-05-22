@@ -1,19 +1,29 @@
-package org.vilutis.lt.pts.dto;
+package org.vilutis.lt.pts.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Holding
  */
-@Validated
 @Data
 @Builder
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class Holding {
+
+    private @Id @Setter(AccessLevel.PROTECTED) String id;
 
     /**
      * Stock name
@@ -21,7 +31,7 @@ public class Holding {
      * @return stock
      **/
     @ApiModelProperty(value = "Stock name")
-    private final String stock;
+    private @NonNull String stock;
 
     /**
      * Average Stock price at the time of purchase
@@ -29,7 +39,7 @@ public class Holding {
      * @return avgPrice
      **/
     @ApiModelProperty(value = "Average Stock price at the time of purchase")
-    private final BigDecimal avgPrice;
+    private @NonNull BigDecimal avgPrice;
 
     /**
      * Current Stock price
@@ -37,7 +47,7 @@ public class Holding {
      * @return currentPrice
      **/
     @ApiModelProperty(value = "Current Stock price")
-    private final BigDecimal currentPrice;
+    private @NonNull BigDecimal currentPrice;
 
     /**
      * Total amount of stocks in current portfolio
@@ -45,7 +55,7 @@ public class Holding {
      * @return amount
      **/
     @ApiModelProperty(value = "Total amount of stocks in current portfolio")
-    private final BigDecimal amount;
+    private @NonNull BigDecimal amount;
 
     /**
      * Value of stocks

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Summary {
+public class SummaryDTO {
 
     @ApiModelProperty(value = "Total stock purchase price")
     BigDecimal purchasePrice;

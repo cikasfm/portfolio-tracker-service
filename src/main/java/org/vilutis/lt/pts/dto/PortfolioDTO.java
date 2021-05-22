@@ -4,14 +4,15 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
+import org.vilutis.lt.pts.model.Holding;
+import org.vilutis.lt.pts.model.Trade;
 
 /**
  * Portfolio
  */
 @Data
 @Builder
-public class Portfolio {
-
+public class PortfolioDTO {
 
     /**
      * Get holdings
@@ -43,7 +44,7 @@ public class Portfolio {
      * @return summary
      **/
     @ApiModelProperty(value = "")
-    private Summary summary;
+    private SummaryDTO summary;
 
 }
 
