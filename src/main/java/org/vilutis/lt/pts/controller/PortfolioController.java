@@ -26,6 +26,15 @@ public class PortfolioController {
         .build()
     );
 
+    private final List<Trade> MOCK_LIQUIDATIONS = Arrays.asList(
+      Trade.builder()
+        .stock("TSLA")
+        .direction(DirectionEnum.SELL)
+        .price(BigDecimal.valueOf(700D).setScale(2, RoundingMode.HALF_UP))
+        .quantity(BigDecimal.ONE)
+        .build()
+    );
+
     private final List<Holding> MOCK_HOLDINGS = Arrays.asList(
       Holding.builder()
         .stock("AAPL")
@@ -49,6 +58,7 @@ public class PortfolioController {
         return Portfolio.builder()
           .holdings(MOCK_HOLDINGS)
           .purchases(MOCK_PURCHASES)
+          .liquidations(MOCK_LIQUIDATIONS)
           .summary(MOCK_SUMMARY)
           .build();
     }
