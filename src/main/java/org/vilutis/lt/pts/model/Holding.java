@@ -43,7 +43,7 @@ public class Holding {
     /**
      * Total amount of stocks in current portfolio
      **/
-    private @NonNull BigDecimal amount;
+    private @NonNull BigDecimal quantity;
 
 }
 

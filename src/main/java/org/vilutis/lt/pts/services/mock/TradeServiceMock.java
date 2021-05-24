@@ -29,6 +29,8 @@ public class TradeServiceMock implements TradeService {
     public TradeServiceMock(ObjectMapper mapper) throws IOException {
         File src = new File("src/main/resources/mockData/trades.json");
         Trade[] trades = mapper.readValue(src, Trade[].class);
+        // sort by date desc
+        Arrays.sort(trades, (t1, t2) -> Long.signum(t2.getTimestamp().getTime() - t1.getTimestamp().getTime()));
         MOCK_HISTORY = Collections.unmodifiableList(Arrays.asList(trades));
     }
 

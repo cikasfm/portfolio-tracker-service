@@ -3,15 +3,9 @@ package org.vilutis.lt.pts.dto;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Setter;
 
 /**
  * Holding
@@ -42,14 +36,14 @@ public class HoldingDTO {
      * Total amount of stocks in current portfolio
      **/
     @ApiModelProperty(value = "Total amount of stocks in current portfolio")
-    private @NonNull BigDecimal amount;
+    private @NonNull BigDecimal quantity;
 
     /**
      * Value of stocks
      **/
     @ApiModelProperty(value = "Value of stocks")
     public BigDecimal getValue() {
-        return getCurrentPrice().multiply(amount).setScale(2, RoundingMode.HALF_UP);
+        return getCurrentPrice().multiply(quantity).setScale(2, RoundingMode.HALF_UP);
     }
 
 }

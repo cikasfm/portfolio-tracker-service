@@ -70,7 +70,7 @@
             <th scope="col">Stock</th>
             <th scope="col">Purchase price</th>
             <th scope="col">Current price</th>
-            <th scope="col">Amount</th>
+            <th scope="col">Quantity</th>
             <th scope="col">Value</th>
         </tr>
         </thead>
@@ -80,7 +80,7 @@
                 <th scope="row">{{stock}}</th>
                 <td>${{avgPrice}}</td>
                 <td>${{currentPrice}}</td>
-                <td>{{amount}}</td>
+                <td>{{quantity}}</td>
                 <td>${{value}}</td>
             </tr>
         {{/each}}
@@ -93,8 +93,9 @@
         <thead>
         <tr>
             <th scope="col">Stock</th>
+            <th scope="col">Date</th>
             <th scope="col">Price</th>
-            <th scope="col">Amount</th>
+            <th scope="col">Quantity</th>
             <th scope="col">Value</th>
         </tr>
         </thead>
@@ -102,6 +103,7 @@
         {{#each trades}}
             <tr>
                 <th scope="row">{{stock}}</th>
+                <td>{{timestamp}}</td>
                 <td>${{price}}</td>
                 <td>{{quantity}}</td>
                 <td>${{value}}</td>

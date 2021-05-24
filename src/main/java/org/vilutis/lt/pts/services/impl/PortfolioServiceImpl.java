@@ -58,7 +58,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         return holdings.stream()
           .map(h -> HoldingDTO.builder()
             .stock(h.getStock())
-            .amount(h.getAmount())
+            .quantity(h.getQuantity())
             .avgPrice(h.getAvgPrice())
             .currentPrice(priceMap.get(h.getStock()))
             .build()
@@ -69,10 +69,10 @@ public class PortfolioServiceImpl implements PortfolioService {
     private SummaryDTO buildSummary(List<Holding> holdings, Map<String, BigDecimal> priceMap) {
         return SummaryDTO.builder()
           .purchasePrice(BigDecimal.valueOf(holdings.stream()
-            .mapToDouble(h -> h.getAmount().multiply(h.getAvgPrice()).doubleValue())
+            .mapToDouble(h -> h.getQuantity().multiply(h.getAvgPrice()).doubleValue())
             .sum()).setScale(2, RoundingMode.HALF_UP))
           .value(BigDecimal.valueOf(holdings.stream()
-            .mapToDouble(h -> h.getAmount().multiply(priceMap.get(h.getStock())).doubleValue())
+            .mapToDouble(h -> h.getQuantity().multiply(priceMap.get(h.getStock())).doubleValue())
             .sum()).setScale(2, RoundingMode.HALF_UP))
           .build();
     }

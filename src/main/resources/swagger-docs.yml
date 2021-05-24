@@ -119,7 +119,7 @@ definitions:
       currentPrice:
         type: number
         description: Current Stock price
-      amount:
+      quantity:
         type: number
         description: Total amount of stocks in current portfolio
       value:
