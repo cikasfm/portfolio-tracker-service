@@ -33,41 +33,36 @@ public class Trade {
     @NonNull
     private String accountNumber;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateTime;
-
     /**
      * Date/Time of the transaction
-     *
-     * @return timestamp
      **/
     @ApiModelProperty(value = "Date/Time of the transaction")
     @NonNull
-    private String timestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     /**
      * Stock name
-     *
-     * @return stock
      **/
     @ApiModelProperty(value = "Stock name")
     @NonNull
     private String stock;
 
     /**
-     * Trade direction:  * `buy` - Stock purchase ( buy )  * `sell` - Stock liquidation ( sell )
-     *
-     * @return direction
+     * Trade direction:
+     * <dl>
+     *     <dt><code>buy</code></dt>
+     *     <dd>Stock purchase ( buy )</dd>
+     *     <dt><code>sell</code></dt>
+     *     <dd>Stock liquidation ( sell )</dd>
+     * </dl>
      **/
     @ApiModelProperty(value = "Trade direction:  * `buy` - Stock purchase ( buy )  * `sell` - Stock liquidation ( sell ) ")
     @NonNull
     private DirectionEnum direction;
 
-
     /**
      * Stock price
-     *
-     * @return price
      **/
     @ApiModelProperty(value = "Stock price")
     @NonNull
@@ -75,8 +70,6 @@ public class Trade {
 
     /**
      * Amount of stocks traded
-     *
-     * @return quantity
      **/
     @ApiModelProperty(value = "Amount of stocks traded")
     @NonNull
@@ -84,8 +77,6 @@ public class Trade {
 
     /**
      * Total dollar value of stocks traded ( quantity * price )
-     *
-     * @return value
      **/
     @ApiModelProperty(value = "Total dollar value of stocks traded ( quantity * price )")
     public BigDecimal getValue() {

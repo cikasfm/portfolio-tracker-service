@@ -1,5 +1,7 @@
 # Application config
 spring:
+  profiles:
+    active: mock
   application:
     name: portfolio-tracker-service
   datasource:
@@ -9,7 +11,6 @@ spring:
     password: password
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-
 
 springfox:
   documentation:

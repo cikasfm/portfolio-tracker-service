@@ -1,4 +1,4 @@
-package org.vilutis.lt.pts.model;
+package org.vilutis.lt.pts.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -18,32 +18,39 @@ import lombok.Setter;
  */
 @Data
 @Builder
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class Holding {
-
-    private @Id @Setter(AccessLevel.PROTECTED) String id;
-
-    /**
-     * Account number
-     **/
-    private @NonNull String accountNumber;
+public class HoldingDTO {
 
     /**
      * Stock name
      **/
+    @ApiModelProperty(value = "Stock name")
     private @NonNull String stock;
 
     /**
      * Average Stock price at the time of purchase
      **/
+    @ApiModelProperty(value = "Average Stock price at the time of purchase")
     private @NonNull BigDecimal avgPrice;
+
+    /**
+     * Current Stock price
+     **/
+    @ApiModelProperty(value = "Current Stock price")
+    private @NonNull BigDecimal currentPrice;
 
     /**
      * Total amount of stocks in current portfolio
      **/
+    @ApiModelProperty(value = "Total amount of stocks in current portfolio")
     private @NonNull BigDecimal amount;
+
+    /**
+     * Value of stocks
+     **/
+    @ApiModelProperty(value = "Value of stocks")
+    public BigDecimal getValue() {
+        return getCurrentPrice().multiply(amount).setScale(2, RoundingMode.HALF_UP);
+    }
 
 }
 

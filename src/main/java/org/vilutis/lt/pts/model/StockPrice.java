@@ -2,9 +2,11 @@ package org.vilutis.lt.pts.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,36 +16,36 @@ import lombok.NonNull;
 import lombok.Setter;
 
 /**
- * Holding
+ * Historical stock price by date on market close
  */
 @Data
 @Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class Holding {
+public class StockPrice {
 
     private @Id @Setter(AccessLevel.PROTECTED) String id;
 
     /**
-     * Account number
-     **/
-    private @NonNull String accountNumber;
-
-    /**
      * Stock name
      **/
+    @ApiModelProperty(value = "Stock name")
     private @NonNull String stock;
 
     /**
-     * Average Stock price at the time of purchase
+     * Date of the stock price
      **/
-    private @NonNull BigDecimal avgPrice;
+    @ApiModelProperty(value = "Date of the stock price")
+    @NonNull
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     /**
-     * Total amount of stocks in current portfolio
+     * Stock price on this date
      **/
-    private @NonNull BigDecimal amount;
+    @ApiModelProperty(value = "stock price on market close")
+    private @NonNull BigDecimal price;
 
 }
 

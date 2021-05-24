@@ -1,0 +1,8 @@
+[
+  {"accountNumber":"acc1", "timestamp":  "2021-05-01T12:34:56.789+08:00", "stock": "TSLA", "direction":"sell","price": "700", "quantity": "5"},
+  {"accountNumber":"acc1", "timestamp":  "2021-05-02T12:34:56.789+08:00", "stock": "AAPL", "direction":"buy","price": "127", "quantity": "10"},
+  {"accountNumber":"acc1", "timestamp":  "2021-05-03T12:34:56.789+08:00", "stock": "AAPL", "direction":"sell","price": "130", "quantity": "10"},
+  {"accountNumber":"acc1", "timestamp":  "2021-05-04T12:34:56.789+08:00", "stock": "TSLA", "direction":"buy","price": "550", "quantity": "5"},
+  {"accountNumber":"acc1", "timestamp":  "2021-05-05T12:34:56.789+08:00", "stock": "TSLA", "direction":"sell","price": "560", "quantity": "5"},
+  {"accountNumber":"acc1", "timestamp":  "2021-05-06T12:34:56.789+08:00", "stock": "AAPL", "direction":"buy","price": "125", "quantity": "10"}
+]

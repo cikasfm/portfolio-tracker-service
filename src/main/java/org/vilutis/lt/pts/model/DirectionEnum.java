@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Trade direction:
- * <ul>
- *   <li>`buy` - Stock purchase ( buy )</li>
- *   <li>`sell` - Stock liquidation ( sell )</li>
- * </ul>
+ * <dl>
+ *     <dt><code>buy</code></dt>
+ *     <dd>Stock purchase ( buy )</dd>
+ *     <dt><code>sell</code></dt>
+ *     <dd>Stock liquidation ( sell )</dd>
+ * </dl>
  */
 public enum DirectionEnum {
 

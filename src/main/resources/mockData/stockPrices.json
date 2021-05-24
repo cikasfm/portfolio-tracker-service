@@ -1,0 +1,15 @@
+[
+  {"stock": "TSLA", "date":  "2021-05-01", "price":  "700"},
+  {"stock": "TSLA", "date":  "2021-05-02", "price":  "650"},
+  {"stock": "TSLA", "date":  "2021-05-03", "price":  "600"},
+  {"stock": "TSLA", "date":  "2021-05-04", "price":  "550"},
+  {"stock": "TSLA", "date":  "2021-05-05", "price":  "560"},
+  {"stock": "TSLA", "date":  "2021-05-06", "price":  "580"},
+
+  {"stock": "AAPL", "date":  "2021-05-01", "price":  "125"},
+  {"stock": "AAPL", "date":  "2021-05-02", "price":  "127"},
+  {"stock": "AAPL", "date":  "2021-05-03", "price":  "130"},
+  {"stock": "AAPL", "date":  "2021-05-04", "price":  "135"},
+  {"stock": "AAPL", "date":  "2021-05-05", "price":  "130"},
+  {"stock": "AAPL", "date":  "2021-05-06", "price":  "125"}
+]

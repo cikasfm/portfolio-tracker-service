@@ -20,7 +20,7 @@ public class PortfolioDTO {
      * @return holdings
      **/
     @ApiModelProperty(value = "Current stock holdings")
-    private List<Holding> holdings;
+    private List<HoldingDTO> holdings;
 
     /**
      * Recent Purchases
