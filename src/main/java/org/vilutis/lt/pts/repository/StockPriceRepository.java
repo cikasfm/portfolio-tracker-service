@@ -21,4 +21,11 @@ public interface StockPriceRepository extends CrudRepository<StockPrice, String>
      */
     Optional<StockPrice> findOneByStockAndDate(@Param("stock") String stock, @Param("date") Date date);
 
+    /**
+     * Finds the latest one
+     * @param stock
+     * @return
+     */
+    Optional<StockPrice> findOneByStockOrderByDateDesc(@Param("stock") String stock);
+
 }

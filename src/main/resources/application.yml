@@ -6,19 +6,20 @@ spring:
     name: portfolio-tracker-service
   web:
     resources:
-      static-locations:
+      static-locations: # required to enable reload ( for development )
         - 'file:src/main/resources/public/'
         - 'classpath:/public/'
-#  web:
-#    resources:
-#      static-locations[0]: 'file:src/main/resources/public/'
-#      static-locations[1]: 'classpath:/public/'
 springfox:
-
   documentation:
     swagger:
       v2:
         path: /api-docs
+
+alpaca:
+  enabled: true
+  api:
+    key: ${env.ALPACA_API_KEY}
+    secret: ${env.ALPACA_API_SECRET}
 
 ---
 spring:

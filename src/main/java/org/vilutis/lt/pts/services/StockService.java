@@ -1,6 +1,8 @@
 package org.vilutis.lt.pts.services;
 
 import java.util.List;
+import java.util.Map;
+import org.vilutis.lt.pts.model.Stock;
 import org.vilutis.lt.pts.model.StockPrice;
 
 /**
@@ -13,5 +15,11 @@ public interface StockService {
      * @param stocks
      * @return
      */
-    List<StockPrice> getCurrentPrices(List<String> stocks);
+    Map<String, StockPrice> getCurrentPrices(List<String> stocks);
+
+    /**
+     * Resolves currently active stocks in the system
+     * @return
+     */
+    List<Stock> getActiveStocks();
 }

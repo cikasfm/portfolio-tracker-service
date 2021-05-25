@@ -78,6 +78,21 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.jacobpeterson</groupId>
+            <artifactId>alpaca-java</artifactId>
+            <version>7.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>2.3.0</version>
+        </dependency>
     </dependencies>
 
     <build>

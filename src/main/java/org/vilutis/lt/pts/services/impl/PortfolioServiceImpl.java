@@ -41,38 +41,40 @@ public class PortfolioServiceImpl implements PortfolioService {
         List<String> stocks = holdings.stream().map(Holding::getStock)
           .collect(Collectors.toList());
 
-        List<StockPrice> prices = stockService.getCurrentPrices(stocks);
-        Map<String, BigDecimal> priceMap = new HashMap<String, BigDecimal>(){{
-            prices.forEach(p -> this.put(p.getStock(), p.getPrice()));
-        }};
+        Map<String, StockPrice> prices = stockService.getCurrentPrices(stocks);
+
+        // verify...
+        stocks.forEach( stock -> prices.computeIfAbsent( stock, key -> {
+            throw new RuntimeException("Stock not in the database!?");
+        }));
 
         return PortfolioDTO.builder()
-          .holdings(buildHoldings(holdings, priceMap))
+          .holdings(buildHoldings(holdings, prices))
           .purchases(tradeService.getPurchases(accountNumber))
           .liquidations(tradeService.getLiquidations(accountNumber))
-          .summary(buildSummary(holdings, priceMap))
+          .summary(buildSummary(holdings, prices))
           .build();
     }
 
-    private List<HoldingDTO> buildHoldings(List<Holding> holdings, Map<String, BigDecimal> priceMap) {
+    private List<HoldingDTO> buildHoldings(List<Holding> holdings, Map<String, StockPrice> priceMap) {
         return holdings.stream()
           .map(h -> HoldingDTO.builder()
             .stock(h.getStock())
             .quantity(h.getQuantity())
             .avgPrice(h.getAvgPrice())
-            .currentPrice(priceMap.get(h.getStock()))
+            .currentPrice(priceMap.get(h.getStock()).getPrice())
             .build()
           )
           .collect(Collectors.toList());
     }
 
-    private SummaryDTO buildSummary(List<Holding> holdings, Map<String, BigDecimal> priceMap) {
+    private SummaryDTO buildSummary(List<Holding> holdings, Map<String, StockPrice> priceMap) {
         return SummaryDTO.builder()
           .purchasePrice(BigDecimal.valueOf(holdings.stream()
             .mapToDouble(h -> h.getQuantity().multiply(h.getAvgPrice()).doubleValue())
             .sum()).setScale(2, RoundingMode.HALF_UP))
           .value(BigDecimal.valueOf(holdings.stream()
-            .mapToDouble(h -> h.getQuantity().multiply(priceMap.get(h.getStock())).doubleValue())
+            .mapToDouble(h -> h.getQuantity().multiply(priceMap.get(h.getStock()).getPrice()).doubleValue())
             .sum()).setScale(2, RoundingMode.HALF_UP))
           .build();
     }
