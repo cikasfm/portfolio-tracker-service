@@ -4,6 +4,15 @@ spring:
     active: mock
   application:
     name: portfolio-tracker-service
+  web:
+    resources:
+      static-locations:
+        - 'file:src/main/resources/public/'
+        - 'classpath:/public/'
+#  web:
+#    resources:
+#      static-locations[0]: 'file:src/main/resources/public/'
+#      static-locations[1]: 'classpath:/public/'
 springfox:
 
   documentation:

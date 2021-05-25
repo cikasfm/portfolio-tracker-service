@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-          crossorigin="anonymous">
-    <!--    <link rel="stylesheet" href="bootstrap.min.css">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"-->
+<!--          rel="stylesheet"-->
+<!--          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"-->
+<!--          crossorigin="anonymous">-->
+    <link rel="stylesheet" href="bootstrap.min.css">
 
     <title>Portfolio Tracker Service</title>
 </head>
 <body>
 <div class="container">
-    <header class="border-bottom pt-5">
+        <header class="border-bottom pt-5">
         <h1>Portfolio Tracker Service</h1>
     </header>
     <main class="pt-3">
@@ -33,7 +33,7 @@
             </div>
         </div>
     </main>
-    <footer class="border-top">
+    <footer class="border-top pt-5">
         <!-- https://en.gravatar.com/userimage/138803011/7d468e98ba002c872ef11f48fe4ae4c9.jpg?size=200 -->
 
         <div class="card mb-3" style="max-width: 600px;">
@@ -66,13 +66,21 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <dl class="p-5">
-            <dt>Name</dt><dd>Zilvinas Vilutis</dd>
-            <dt>linkedin</dt><dd><a href="https://www.linkedin.com/in/zvilutis" class="link-primary" target="_blank">linkedin.com/in/zvilutis</a></dd>
-            <dt>website</dt><dd><a href="https://zilvinas.vilutis.lt" class="link-primary" target="_blank">zilvinas.vilutis.lt</a></dd>
-            <dt>email</dt><dd><a href="mailto:zilvinas@vilutis.lt" class="link-primary">zilvinas@vilutis.lt</a></dd>
-            <dt>phone</dt><dd>(415) 802-3508</dd>
-        </dl>
+        <div class="m-5 card" style="width: 18rem;">
+            <img class="card-img-top" src="https://en.gravatar.com/userimage/138803011/7d468e98ba002c872ef11f48fe4ae4c9.jpg?size=300">
+            <div class="card-body">
+                <p class="card-text">
+                    <dl class="p-4">
+                        <dt>author</dt><dd>Zilvinas Vilutis</dd>
+                        <dt>linkedin</dt><dd><a href="https://www.linkedin.com/in/zvilutis" class="link-primary" target="_blank">linkedin.com/in/zvilutis</a></dd>
+                        <dt>website</dt><dd><a href="https://zilvinas.vilutis.lt" class="link-primary" target="_blank">zilvinas.vilutis.lt</a></dd>
+                        <dt>email</dt><dd><a href="mailto:zilvinas@vilutis.lt" class="link-primary">zilvinas@vilutis.lt</a></dd>
+                        <dt>phone</dt><dd>(415) 802-3508</dd>
+                    </dl>
+                </p>
+            </div>
+        </div>
+
     </div>
 </div>
 <!-- Optional JavaScript; choose one of the two! -->
@@ -98,9 +106,9 @@
         crossorigin="anonymous"></script>
 
 <script type="text/x-handlebars-template" id="tpl-holdings">
-    <summary>
+    <div>
         <h1>Total ${{summary.value}}</h1>
-    </summary>
+    </div>
     <table class="table table-striped pts-holdings">
         <thead>
         <tr>
