@@ -19,14 +19,34 @@ public interface TradeService {
     }
     List<Trade> getHistory(String accountNumber, String stock, Pageable page);
 
+    /**
+     * Get latest purchase(buy) {@link Trade}s by account number.
+     * By default last 10 ( sort by {@link Trade#timestamp} desc )
+     */
     default List<Trade> getPurchases(String accountNumber) {
         return this.getPurchases(accountNumber, TEN_LATEST);
     }
+
+    /**
+     * Get latest purchase(buy) {@link Trade}s by account number
+     * @param accountNumber
+     * @param page - paging params
+     */
     List<Trade> getPurchases(String accountNumber, Pageable page);
 
+    /**
+     * Get latest liquidation(sell) {@link Trade}s by account number.
+     * By default last 10 ( sort by {@link Trade#timestamp} desc )
+     */
     default List<Trade> getLiquidations(String accountNumber) {
         return this.getLiquidations(accountNumber, TEN_LATEST);
     }
+
+    /**
+     * Get latest liquidation(sell) {@link Trade}s by account number.
+     * @param accountNumber
+     * @param page - paging params
+     */
     List<Trade> getLiquidations(String accountNumber, Pageable page);
 
 }

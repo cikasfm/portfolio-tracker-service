@@ -4,9 +4,32 @@ spring:
     active: mock
   application:
     name: portfolio-tracker-service
-
 springfox:
+
   documentation:
     swagger:
       v2:
         path: /api-docs
+
+---
+spring:
+  config:
+    activate:
+      on-profile: h2
+  datasource:
+    url: 'jdbc:h2:mem:testdb'
+    driverClassName: 'org.h2.Driver'
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+---
+spring:
+  config:
+    activate:
+      on-profile: mock
+  data:
+    jpa:
+      repositories:
+        enabled: false

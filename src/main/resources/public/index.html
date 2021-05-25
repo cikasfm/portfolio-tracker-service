@@ -23,20 +23,57 @@
         <h2>Portfolio</h2>
         <div id="portfolio"></div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-xl-6">
                 <h2>Recent purchases</h2>
                 <div id="purchases"></div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-xl-6">
                 <h2>Recent liquidations</h2>
                 <div id="liquidations"></div>
             </div>
         </div>
     </main>
     <footer class="border-top">
-        <span>Copyright® 2021</span>
+        <!-- https://en.gravatar.com/userimage/138803011/7d468e98ba002c872ef11f48fe4ae4c9.jpg?size=200 -->
+
+        <div class="card mb-3" style="max-width: 600px;">
+            <div class="row g-0">
+                <div class="col-3">
+                    <img class="card-img" src="https://en.gravatar.com/userimage/138803011/7d468e98ba002c872ef11f48fe4ae4c9.jpg?size=150">
+                </div>
+                <div class="col-9">
+                    <div class="card-body">
+                        <h5 class="card-title">Thin Portfolio®</h5>
+                        <p class="card-text">Created with love by <a href="https://zilvinas.vilutis.lt">@zvilutis</a> in May of 2021.</p>
+                        <p class="card-text">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#contacts" aria-controls="contacts">
+                                Contact
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </footer>
 
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="contacts" aria-labelledby="contactsLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="contactsLabel">Contacts</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <dl class="p-5">
+            <dt>Name</dt><dd>Zilvinas Vilutis</dd>
+            <dt>linkedin</dt><dd><a href="https://www.linkedin.com/in/zvilutis" class="link-primary" target="_blank">linkedin.com/in/zvilutis</a></dd>
+            <dt>website</dt><dd><a href="https://zilvinas.vilutis.lt" class="link-primary" target="_blank">zilvinas.vilutis.lt</a></dd>
+            <dt>email</dt><dd><a href="mailto:zilvinas@vilutis.lt" class="link-primary">zilvinas@vilutis.lt</a></dd>
+            <dt>phone</dt><dd>(415) 802-3508</dd>
+        </dl>
+    </div>
 </div>
 <!-- Optional JavaScript; choose one of the two! -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -64,7 +101,7 @@
     <summary>
         <h1>Total ${{summary.value}}</h1>
     </summary>
-    <table class="table pts-holdings">
+    <table class="table table-striped pts-holdings">
         <thead>
         <tr>
             <th scope="col">Stock</th>
@@ -89,11 +126,11 @@
 </script>
 
 <script type="text/x-handlebars-template" id="tpl-trades">
-    <table class="table pts-trades">
+    <table class="table table-striped pts-trades">
         <thead>
         <tr>
             <th scope="col">Stock</th>
-            <th scope="col">Date</th>
+            <th scope="col" class="d-none d-md-table-cell">Date</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Value</th>
@@ -103,7 +140,7 @@
         {{#each trades}}
             <tr>
                 <th scope="row">{{stock}}</th>
-                <td>{{timestamp}}</td>
+                <td class="d-none d-md-table-cell text-truncate" style="max-width: 10ch">{{timestamp}}</td>
                 <td>${{price}}</td>
                 <td>{{quantity}}</td>
                 <td>${{value}}</td>
