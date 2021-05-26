@@ -9,6 +9,15 @@ spring:
       static-locations: # required to enable reload ( for development )
         - 'file:src/main/resources/public/'
         - 'classpath:/public/'
+  # OAuth2 settings
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: ${env.GITHUB_CLIENT_ID}
+            clientSecret: ${env.GITHUB_CLIENT_SECRET}
+
 springfox:
   documentation:
     swagger:
@@ -18,8 +27,8 @@ springfox:
 
 alpaca:
   api:
-    key: ${env.ALPACA_API_KEY}
-    secret: ${env.ALPACA_API_SECRET}
+    key: ${env.ALPACA_API_KEY:false}
+    secret: ${env.ALPACA_API_SECRET:false}
 
 ---
 spring:

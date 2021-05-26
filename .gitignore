@@ -1,6 +1,6 @@
 *.iml
 .idea/
 target/
-
+.DS_Store
 ### Local Configuration ###
 .env
