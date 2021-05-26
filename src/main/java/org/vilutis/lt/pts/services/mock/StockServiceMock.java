@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -22,7 +23,7 @@ import org.vilutis.lt.pts.services.api.StockService;
 public class StockServiceMock implements StockService {
 
     private final List<StockPrice> stockPrices;
-    private final Map<String, BigDecimal> stockPriceCache = new HashMap<>();
+    private final Map<String, StockPrice> stockPriceCache = new HashMap<>();
     private final List<Stock> stockList;
 
     @Autowired
@@ -33,11 +34,18 @@ public class StockServiceMock implements StockService {
         this.stockList = this.stockPrices.stream()
           .map(s -> Stock.builder().stock(s.getStock()).build())
           .collect(Collectors.toList());
-        this.stockPrices.forEach(sp -> stockPriceCache.put(sp.getStock(), sp.getPrice()));
+        this.stockPrices.forEach(sp -> stockPriceCache.put(sp.getStock(), sp));
     }
 
     @Override
     public BigDecimal getCurrentPrice(String stock) {
+        return Optional.ofNullable(stockPriceCache.get(stock))
+          .map(StockPrice::getPrice)
+          .orElse(null);
+    }
+
+    @Override
+    public StockPrice getStockPrice(String stock) {
         return stockPriceCache.get(stock);
     }
 
@@ -48,7 +56,7 @@ public class StockServiceMock implements StockService {
 
     @Override
     public void update(String stock, Date date, BigDecimal price) {
-        this.stockPriceCache.put(stock, price);
+        Optional.ofNullable(stockPriceCache.get(stock)).ifPresent(sp -> sp.setPrice(price));
     }
 
     @Override
@@ -61,5 +69,17 @@ public class StockServiceMock implements StockService {
           .findFirst()
           .map(StockPrice::getPrice)
           .orElse(null);
+    }
+
+    @Override
+    public void setIncreaseAlertSent(String stock, Date date) {
+        Optional.ofNullable(stockPriceCache.get(stock))
+          .ifPresent(sp -> sp.setIncreaseAlertSent(true));
+    }
+
+    @Override
+    public void setDecreaseAlertSent(String stock, Date date) {
+        Optional.ofNullable(stockPriceCache.get(stock))
+          .ifPresent(sp -> sp.setDecreaseAlertSent(true));
     }
 }

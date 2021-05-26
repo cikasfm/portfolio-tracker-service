@@ -22,6 +22,13 @@ public interface StockService {
     BigDecimal getCurrentPrice(String stock);
 
     /**
+     * Provides current ( latest ) {@link StockPrice} object by stock
+     * @param stock
+     * @return
+     */
+    StockPrice getStockPrice(String stock);
+
+    /**
      * Resolves currently active stocks in the system
      */
     List<Stock> getActiveStocks();
@@ -40,4 +47,8 @@ public interface StockService {
     void update(String stock, Date date, BigDecimal price);
 
     BigDecimal getPreviousPrice(String stock);
+
+    void setIncreaseAlertSent(String stock, Date date);
+
+    void setDecreaseAlertSent(String stock, Date date);
 }

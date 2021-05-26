@@ -55,6 +55,13 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    public StockPrice getStockPrice(String stock) {
+        return stockPriceRepository
+          .findOneByStockAndDate(stock, stripTime(new Date()))
+          .orElse(null);
+    }
+
+    @Override
     @Cacheable("stocks")
     public List<Stock> getActiveStocks() {
         return new ArrayList<Stock>() {{
@@ -87,5 +94,27 @@ public class StockServiceImpl implements StockService {
     public BigDecimal getPreviousPrice(String stock) {
         return stockPriceRepository.findOneBeforeDate(stock, stripTime(new Date()))
           .map(StockPrice::getPrice).orElseGet(null);
+    }
+
+    @Override
+    @Transactional
+    public void setIncreaseAlertSent(String stock, Date date) {
+        stockPriceRepository
+          .findOneByStockAndDate(stock, date)
+          .ifPresent(sp -> {
+              sp.setIncreaseAlertSent(true);
+              stockPriceRepository.save(sp);
+          });
+    }
+
+    @Override
+    @Transactional
+    public void setDecreaseAlertSent(String stock, Date date) {
+        stockPriceRepository
+          .findOneByStockAndDate(stock, date)
+          .ifPresent(sp -> {
+              sp.setDecreaseAlertSent(true);
+              stockPriceRepository.save(sp);
+          });
     }
 }

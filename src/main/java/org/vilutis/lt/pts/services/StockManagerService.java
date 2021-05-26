@@ -2,6 +2,7 @@ package org.vilutis.lt.pts.services;
 
 import static org.vilutis.lt.pts.services.api.StockService.stripTime;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.vilutis.lt.pts.dto.StockPriceAlertDTO;
 import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
+import org.vilutis.lt.pts.model.StockPrice;
 import org.vilutis.lt.pts.services.api.StockService;
 
 @Service
@@ -28,6 +32,7 @@ public class StockManagerService {
     private final AlertService alertService;
     private final LoadingCache<String, BigDecimal> currentPriceCache;
     private final LoadingCache<String, BigDecimal> previousPriceCache;
+    private final LoadingCache<String, StockPriceAlertDTO> priceAlertCache;
 
     private final BigDecimal alertThreshold;
 
@@ -40,7 +45,6 @@ public class StockManagerService {
         this.stockService = stockService;
         this.alertService = alertService;
         this.alertThreshold = alertThreshold;
-        // TODO warm-up cache?
         this.currentPriceCache = Caffeine.newBuilder()
           .expireAfterAccess(10, TimeUnit.MINUTES)
           .maximumSize(10_000)
@@ -50,6 +54,12 @@ public class StockManagerService {
           .expireAfterAccess(10, TimeUnit.MINUTES)
           .maximumSize(10_000)
           .build(key -> stockService.getPreviousPrice(key));
+        this.priceAlertCache = Caffeine.newBuilder()
+          .expireAfterAccess(10, TimeUnit.MINUTES)
+          .maximumSize(10_000)
+          .build(key -> Optional.ofNullable(stockService.getStockPrice(key))
+            .map(StockPriceAlertDTO::of)
+            .orElse(null));
     }
 
     @Async
@@ -73,13 +83,28 @@ public class StockManagerService {
         BigDecimal previousPrice = previousPriceCache.get(stock);
         if (price.compareTo(previousPrice) > 0
           && price.compareTo(addThreshold(previousPrice)) >= 0) {
-            // trigger alert
-            alertService.priceIncreased(trade, previousPrice, alertThreshold);
+
+            StockPriceAlertDTO alertDTO = priceAlertCache.get(stock);
+            // only send once
+            if (alertDTO != null && !alertDTO.isIncreaseAlertSent()) {
+                // trigger alert
+                alertDTO.setIncreaseAlertSent(true);
+                // TODO : update value in DB
+                alertService.priceIncreased(trade, previousPrice, alertThreshold);
+                stockService.setIncreaseAlertSent(stock, alertDTO.getDate());
+            }
         }
         if (price.compareTo(previousPrice) < 0
           && price.compareTo(subtractThreshold(previousPrice)) <= 0) {
-            // trigger alert
-            alertService.priceDecreased(trade, previousPrice, alertThreshold);
+            StockPriceAlertDTO alertDTO = priceAlertCache.get(stock);
+            // only send once
+            if (alertDTO != null && !alertDTO.isDecreaseAlertSent()) {
+                // trigger alert
+                alertDTO.setDecreaseAlertSent(true);
+                // TODO : update value in DB
+                alertService.priceDecreased(trade, previousPrice, alertThreshold);
+                stockService.setDecreaseAlertSent(stock, alertDTO.getDate());
+            }
         }
     }
 

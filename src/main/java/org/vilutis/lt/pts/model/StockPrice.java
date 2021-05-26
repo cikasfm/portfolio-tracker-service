@@ -47,5 +47,9 @@ public class StockPrice {
     @ApiModelProperty(value = "stock price on market close")
     private @NonNull BigDecimal price;
 
+    boolean increaseAlertSent = false;
+
+    boolean decreaseAlertSent = false;
+
 }
 
