@@ -1,4 +1,4 @@
-package org.vilutis.lt.pts.services;
+package org.vilutis.lt.pts.services.api;
 
 import java.math.BigDecimal;
 import java.util.Calendar;

@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
+import org.vilutis.lt.pts.services.api.StockService;
 
 class StockManagerServiceTest {
 

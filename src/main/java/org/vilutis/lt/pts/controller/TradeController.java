@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.vilutis.lt.pts.model.Trade;
-import org.vilutis.lt.pts.services.TradeService;
+import org.vilutis.lt.pts.services.api.TradeService;
 
 @RestController
 @RequestMapping("/api/trades")

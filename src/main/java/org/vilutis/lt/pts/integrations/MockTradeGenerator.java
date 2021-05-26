@@ -14,18 +14,18 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
 import org.vilutis.lt.pts.model.Stock;
-import org.vilutis.lt.pts.services.StockService;
+import org.vilutis.lt.pts.services.api.StockService;
 
 @Component
 @Slf4j
-@Profile("mock")
+@ConditionalOnMissingBean(AlpacaStreamingClient.class)
 public class MockTradeGenerator implements InitializingBean, ApplicationEventPublisherAware {
 
     private ApplicationEventPublisher publisher;

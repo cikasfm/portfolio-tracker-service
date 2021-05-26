@@ -1,6 +1,6 @@
 package org.vilutis.lt.pts.services;
 
-import static org.vilutis.lt.pts.services.StockService.stripTime;
+import static org.vilutis.lt.pts.services.api.StockService.stripTime;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
+import org.vilutis.lt.pts.services.api.StockService;
 
 @Service
 @Slf4j

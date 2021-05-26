@@ -16,6 +16,11 @@ springfox:
         path: /api-docs
 
 
+alpaca:
+  api:
+    key: ${env.ALPACA_API_KEY}
+    secret: ${env.ALPACA_API_SECRET}
+
 ---
 spring:
   config:
@@ -28,10 +33,6 @@ spring:
     password: password
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-alpaca:
-  api:
-    key: ${env.ALPACA_API_KEY}
-    secret: ${env.ALPACA_API_SECRET}
 
 ---
 spring:

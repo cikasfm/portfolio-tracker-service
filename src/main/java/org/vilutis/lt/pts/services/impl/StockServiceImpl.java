@@ -1,6 +1,6 @@
 package org.vilutis.lt.pts.services.impl;
 
-import static org.vilutis.lt.pts.services.StockService.stripTime;
+import static org.vilutis.lt.pts.services.api.StockService.stripTime;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import org.vilutis.lt.pts.model.Stock;
 import org.vilutis.lt.pts.model.StockPrice;
 import org.vilutis.lt.pts.repository.StockPriceRepository;
 import org.vilutis.lt.pts.repository.StockRepository;
-import org.vilutis.lt.pts.services.StockService;
+import org.vilutis.lt.pts.services.api.StockService;
 
 @Service
 @Slf4j

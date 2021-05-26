@@ -11,10 +11,10 @@ import org.vilutis.lt.pts.dto.HoldingDTO;
 import org.vilutis.lt.pts.dto.PortfolioDTO;
 import org.vilutis.lt.pts.dto.SummaryDTO;
 import org.vilutis.lt.pts.model.Holding;
-import org.vilutis.lt.pts.services.HoldingsService;
-import org.vilutis.lt.pts.services.PortfolioService;
 import org.vilutis.lt.pts.services.StockManagerService;
-import org.vilutis.lt.pts.services.TradeService;
+import org.vilutis.lt.pts.services.api.HoldingsService;
+import org.vilutis.lt.pts.services.api.PortfolioService;
+import org.vilutis.lt.pts.services.api.TradeService;
 
 @Service
 public class PortfolioServiceImpl implements PortfolioService {

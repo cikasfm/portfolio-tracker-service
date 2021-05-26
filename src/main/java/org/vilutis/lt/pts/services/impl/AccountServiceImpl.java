@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.vilutis.lt.pts.exception.AccountNotFoundException;
 import org.vilutis.lt.pts.model.Account;
 import org.vilutis.lt.pts.repository.AccountRepository;
-import org.vilutis.lt.pts.services.AccountService;
+import org.vilutis.lt.pts.services.api.AccountService;
 
 @Service
 @Profile("!mock")

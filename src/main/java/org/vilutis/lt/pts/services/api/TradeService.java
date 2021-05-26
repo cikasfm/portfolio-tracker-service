@@ -1,4 +1,4 @@
-package org.vilutis.lt.pts.services;
+package org.vilutis.lt.pts.services.api;
 
 import java.util.List;
 import org.springframework.data.domain.PageRequest;

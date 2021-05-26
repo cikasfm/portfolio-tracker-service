@@ -3,8 +3,6 @@ package org.vilutis.lt.pts.services.mock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.vilutis.lt.pts.model.Holding;
-import org.vilutis.lt.pts.repository.HoldingRepository;
-import org.vilutis.lt.pts.services.HoldingsService;
+import org.vilutis.lt.pts.services.api.HoldingsService;
 
 @Service
 @Profile("mock")

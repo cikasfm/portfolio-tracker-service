@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.vilutis.lt.pts.dto.PortfolioDTO;
-import org.vilutis.lt.pts.services.PortfolioService;
+import org.vilutis.lt.pts.services.api.PortfolioService;
 
 @RestController
 @RequestMapping("/api/portfolio")

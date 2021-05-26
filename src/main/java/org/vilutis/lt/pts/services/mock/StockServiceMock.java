@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,10 +13,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import org.vilutis.lt.pts.events.TradeEvent;
 import org.vilutis.lt.pts.model.Stock;
 import org.vilutis.lt.pts.model.StockPrice;
-import org.vilutis.lt.pts.services.StockService;
+import org.vilutis.lt.pts.services.api.StockService;
 
 @Service
 @Profile("mock")

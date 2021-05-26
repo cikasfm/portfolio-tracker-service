@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.vilutis.lt.pts.model.DirectionEnum;
 import org.vilutis.lt.pts.model.Trade;
 import org.vilutis.lt.pts.repository.TradeRepository;
-import org.vilutis.lt.pts.services.TradeService;
+import org.vilutis.lt.pts.services.api.TradeService;
 
 @Service
 @Profile("!mock")

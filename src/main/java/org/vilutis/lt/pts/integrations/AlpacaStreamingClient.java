@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
 import org.vilutis.lt.pts.model.Stock;
-import org.vilutis.lt.pts.services.StockService;
+import org.vilutis.lt.pts.services.api.StockService;
 
 @Component
 @Slf4j

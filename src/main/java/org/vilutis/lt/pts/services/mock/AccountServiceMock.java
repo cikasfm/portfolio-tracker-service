@@ -3,7 +3,7 @@ package org.vilutis.lt.pts.services.mock;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.vilutis.lt.pts.model.Account;
-import org.vilutis.lt.pts.services.AccountService;
+import org.vilutis.lt.pts.services.api.AccountService;
 
 @Service
 @Profile("mock")

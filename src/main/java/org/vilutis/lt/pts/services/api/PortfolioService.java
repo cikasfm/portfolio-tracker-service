@@ -1,4 +1,4 @@
-package org.vilutis.lt.pts.services;
+package org.vilutis.lt.pts.services.api;
 
 import org.vilutis.lt.pts.dto.PortfolioDTO;
 
