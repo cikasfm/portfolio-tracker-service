@@ -82,4 +82,10 @@ public class StockServiceImpl implements StockService {
             );
         }
     }
+
+    @Override
+    public BigDecimal getPreviousPrice(String stock) {
+        return stockPriceRepository.findOneBeforeDate(stock, stripTime(new Date()))
+          .map(StockPrice::getPrice).orElseGet(null);
+    }
 }

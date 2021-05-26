@@ -1,12 +1,13 @@
 package org.vilutis.lt.pts.events;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import lombok.Builder;
-import lombok.Data;
 import org.springframework.context.ApplicationEvent;
+import org.vilutis.lt.pts.dto.TradeDTO;
 
 public class TradeEvent extends ApplicationEvent {
+
+    public static TradeEvent with(TradeDTO trade) {
+        return new TradeEvent(trade);
+    }
 
     /**
      * Create a new {@code ApplicationEvent}.
@@ -14,7 +15,7 @@ public class TradeEvent extends ApplicationEvent {
      * @param trade the object on which the event initially occurred or with which the event is
      * associated (never {@code null})
      */
-    public TradeEvent(TradeDTO trade) {
+    private TradeEvent(TradeDTO trade) {
         super(trade);
     }
 
@@ -23,14 +24,4 @@ public class TradeEvent extends ApplicationEvent {
         return (TradeDTO) super.getSource();
     }
 
-    @Data
-    @Builder
-    public static class TradeDTO {
-
-        private final String stock;
-        private final BigDecimal price;
-        private final BigDecimal quantity;
-        private final Date timestamp;
-
-    }
 }

@@ -1,3 +1,4 @@
 [
-  {"accountNumber":"acc1", "stock": "AAPL","avgPrice": "125", "quantity": "20"}
+  {"accountNumber":"acc1", "stock": "AAPL","avgPrice": "125", "quantity": "20"},
+  {"accountNumber":"acc1", "stock": "TSLA","avgPrice": "680", "quantity": "5"}
 ]

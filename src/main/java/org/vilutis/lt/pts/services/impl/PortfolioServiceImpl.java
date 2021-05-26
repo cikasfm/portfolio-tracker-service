@@ -11,10 +11,9 @@ import org.vilutis.lt.pts.dto.HoldingDTO;
 import org.vilutis.lt.pts.dto.PortfolioDTO;
 import org.vilutis.lt.pts.dto.SummaryDTO;
 import org.vilutis.lt.pts.model.Holding;
-import org.vilutis.lt.pts.model.StockPrice;
 import org.vilutis.lt.pts.services.HoldingsService;
 import org.vilutis.lt.pts.services.PortfolioService;
-import org.vilutis.lt.pts.services.StockService;
+import org.vilutis.lt.pts.services.StockManagerService;
 import org.vilutis.lt.pts.services.TradeService;
 
 @Service
@@ -41,11 +40,6 @@ public class PortfolioServiceImpl implements PortfolioService {
           .collect(Collectors.toList());
 
         Map<String, BigDecimal> prices = stockService.getCurrentPrices(stocks);
-
-        // verify...
-        stocks.forEach( stock -> prices.computeIfAbsent( stock, key -> {
-            throw new RuntimeException("Stock not in the database!?");
-        }));
 
         return PortfolioDTO.builder()
           .holdings(buildHoldings(holdings, prices))

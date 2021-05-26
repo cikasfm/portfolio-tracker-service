@@ -18,7 +18,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.vilutis.lt.pts.events.TradeEvent.TradeDTO;
+import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
 import org.vilutis.lt.pts.model.Stock;
 import org.vilutis.lt.pts.services.StockService;
@@ -63,14 +63,14 @@ public class MockTradeGenerator implements InitializingBean, ApplicationEventPub
                         iterator = activeStocks.iterator();
                     }
 
-                    // range between -5% and +5%
-                    BigDecimal change = BigDecimal.valueOf((random.nextDouble(10) - 5) / 100);
+                    // range between -0.5% and +0.5%
+                    BigDecimal change = BigDecimal.valueOf((random.nextDouble() * 10 - 5) / 100);
 
                     BigDecimal newPrice = stockService.getCurrentPrice(stock)
                       .multiply(BigDecimal.ONE.add(change))
                       .setScale(4, RoundingMode.HALF_UP);
 
-                    executorService.submit(() -> publisher.publishEvent(new TradeEvent(
+                    executorService.submit(() -> publisher.publishEvent(TradeEvent.with(
                       TradeDTO.builder()
                         .stock(stock)
                         .price(newPrice)

@@ -15,16 +15,6 @@ import org.vilutis.lt.pts.model.StockPrice;
 public interface StockService {
 
     /**
-     * Provides current ( latest ) stock prices
-     * @param stocks
-     */
-    default Map<String, BigDecimal> getCurrentPrices(List<String> stocks) {
-        return new HashMap<String, BigDecimal>(){{
-            stocks.stream().map(s -> put(s, getCurrentPrice(s)));
-        }};
-    }
-
-    /**
      * Provides current ( latest ) stock price by stock
      * @param stock
      * @return
@@ -48,4 +38,6 @@ public interface StockService {
     }
 
     void update(String stock, Date date, BigDecimal price);
+
+    BigDecimal getPreviousPrice(String stock);
 }

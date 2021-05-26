@@ -39,15 +39,6 @@ public class StockServiceMock implements StockService {
     }
 
     @Override
-    public Map<String, BigDecimal> getCurrentPrices(List<String> stocks) {
-        return new HashMap<String, BigDecimal>() {{
-            stockPrices.stream()
-              .filter(sp -> stocks.contains(sp.getStock()))
-              .forEach(sp -> put(sp.getStock(), sp.getPrice()));
-        }};
-    }
-
-    @Override
     public BigDecimal getCurrentPrice(String stock) {
         return stockPriceCache.get(stock);
     }
@@ -60,5 +51,17 @@ public class StockServiceMock implements StockService {
     @Override
     public void update(String stock, Date date, BigDecimal price) {
         this.stockPriceCache.put(stock, price);
+    }
+
+    @Override
+    public BigDecimal getPreviousPrice(String stock) {
+        Date today = StockService.stripTime(new Date());
+        return stockPrices.stream()
+          .filter(sp -> sp.getStock().equals(stock))
+          .filter(sp -> sp.getDate().getTime() < today.getTime())
+          .sorted((s1, s2) -> Long.signum(s2.getDate().getTime() - s1.getDate().getTime()))
+          .findFirst()
+          .map(StockPrice::getPrice)
+          .orElse(null);
     }
 }

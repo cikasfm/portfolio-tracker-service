@@ -21,7 +21,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
-import org.vilutis.lt.pts.events.TradeEvent.TradeDTO;
+import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
 import org.vilutis.lt.pts.model.Stock;
 import org.vilutis.lt.pts.services.StockService;
@@ -68,7 +68,7 @@ public class AlpacaStreamingClient implements InitializingBean, ApplicationEvent
                               tradeMessage.getSymbol(),
                               tradeMessage.getPrice(), tradeMessage.getSize(),
                               tradeMessage.getTimestamp()));
-                            publisher.publishEvent(new TradeEvent(mapToTradeDto(tradeMessage)));
+                            publisher.publishEvent(TradeEvent.with(mapToTradeDto(tradeMessage)));
                             break;
                         case QUOTE:
                             QuoteMessage quoteMessage = (QuoteMessage) streamMessage;
