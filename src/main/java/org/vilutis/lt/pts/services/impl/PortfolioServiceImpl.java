@@ -2,7 +2,6 @@ package org.vilutis.lt.pts.services.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,12 +22,12 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     private final TradeService tradeService;
     private final HoldingsService holdingsService;
-    private final StockService stockService;
+    private final StockManagerService stockService;
 
     @Autowired
     public PortfolioServiceImpl(TradeService tradeService,
       HoldingsService holdingsService,
-      StockService stockService) {
+      StockManagerService stockService) {
         this.tradeService = tradeService;
         this.holdingsService = holdingsService;
         this.stockService = stockService;
@@ -41,7 +40,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         List<String> stocks = holdings.stream().map(Holding::getStock)
           .collect(Collectors.toList());
 
-        Map<String, StockPrice> prices = stockService.getCurrentPrices(stocks);
+        Map<String, BigDecimal> prices = stockService.getCurrentPrices(stocks);
 
         // verify...
         stocks.forEach( stock -> prices.computeIfAbsent( stock, key -> {
@@ -56,25 +55,25 @@ public class PortfolioServiceImpl implements PortfolioService {
           .build();
     }
 
-    private List<HoldingDTO> buildHoldings(List<Holding> holdings, Map<String, StockPrice> priceMap) {
+    private List<HoldingDTO> buildHoldings(List<Holding> holdings, Map<String, BigDecimal> priceMap) {
         return holdings.stream()
           .map(h -> HoldingDTO.builder()
             .stock(h.getStock())
             .quantity(h.getQuantity())
             .avgPrice(h.getAvgPrice())
-            .currentPrice(priceMap.get(h.getStock()).getPrice())
+            .currentPrice(priceMap.get(h.getStock()))
             .build()
           )
           .collect(Collectors.toList());
     }
 
-    private SummaryDTO buildSummary(List<Holding> holdings, Map<String, StockPrice> priceMap) {
+    private SummaryDTO buildSummary(List<Holding> holdings, Map<String, BigDecimal> priceMap) {
         return SummaryDTO.builder()
           .purchasePrice(BigDecimal.valueOf(holdings.stream()
             .mapToDouble(h -> h.getQuantity().multiply(h.getAvgPrice()).doubleValue())
             .sum()).setScale(2, RoundingMode.HALF_UP))
           .value(BigDecimal.valueOf(holdings.stream()
-            .mapToDouble(h -> h.getQuantity().multiply(priceMap.get(h.getStock()).getPrice()).doubleValue())
+            .mapToDouble(h -> h.getQuantity().multiply(priceMap.get(h.getStock())).doubleValue())
             .sum()).setScale(2, RoundingMode.HALF_UP))
           .build();
     }

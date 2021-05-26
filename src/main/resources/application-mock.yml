@@ -1,6 +1,0 @@
-# Application config
-spring:
-  data:
-    jpa:
-      repositories:
-        enabled: false

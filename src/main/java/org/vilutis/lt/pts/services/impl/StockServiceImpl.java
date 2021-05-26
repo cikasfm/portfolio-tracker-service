@@ -1,24 +1,18 @@
 package org.vilutis.lt.pts.services.impl;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import static org.vilutis.lt.pts.services.StockService.stripTime;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.vilutis.lt.pts.integrations.TradeEvent;
-import org.vilutis.lt.pts.listener.TradeDTO;
+import org.springframework.transaction.annotation.Transactional;
 import org.vilutis.lt.pts.model.Stock;
 import org.vilutis.lt.pts.model.StockPrice;
 import org.vilutis.lt.pts.repository.StockPriceRepository;
@@ -33,58 +27,31 @@ public class StockServiceImpl implements StockService {
     private final StockRepository stockRepository;
     private final StockPriceRepository stockPriceRepository;
 
-    private final Cache<String, StockPrice> stockPriceCache;
-
     @Autowired
     public StockServiceImpl(StockRepository stockRepository,
       StockPriceRepository stockPriceRepository) {
         this.stockRepository = stockRepository;
         this.stockPriceRepository = stockPriceRepository;
-        this.stockPriceCache = Caffeine.newBuilder()
-          .expireAfterWrite(10, TimeUnit.MINUTES)
-          .maximumSize(10_000)
-          .build(this::getStockPrice);
     }
 
-    @EventListener(TradeEvent.class)
-    @Async
-    public void listen(TradeEvent event) {
-        TradeDTO trade = event.getSource();
-        log.info("Event received:" + trade);
-        StockPrice stockPrice = stockPriceRepository.findById(trade.getStock())
-          .orElseGet(() ->
-            StockPrice.builder()
-              .stock(trade.getStock())
-              .price(trade.getPrice())
-              .date(stripTime(trade.getTimestamp()))
-              .build());
-        stockPrice.setPrice(trade.getPrice());
-        // DB update
-        // TODO async DB update?
-        stockPriceRepository.save(stockPrice);
-        // cache update
-        stockPriceCache.put(trade.getStock(), stockPrice);
-    }
-
-    private StockPrice getStockPrice(String stock) {
+    @Override
+    public BigDecimal getCurrentPrice(String stock) {
         // try find one for stripTime's date
         Optional<StockPrice> stockPriceOptional = stockPriceRepository
           .findOneByStockAndDate(stock, stripTime(new Date()));
 
-        return stockPriceOptional.orElseGet(() -> {
-            // if not present, try & find the latest one
-            Optional<StockPrice> latestOptional = stockPriceRepository
-              .findOneByStockOrderByDateDesc(stock);
+        if (stockPriceOptional.isPresent()) {
+            return stockPriceOptional.map(StockPrice::getPrice).get();
+        }
 
-            return latestOptional.orElse(null);
-        });
-    }
+        Optional<StockPrice> latestOptional = stockPriceRepository
+          .findOneByStockOrderByDateDesc(stock);
 
-    @Override
-    public Map<String, StockPrice> getCurrentPrices(List<String> stocks) {
-        return stockPriceCache.getAll(stocks, allStocks -> new HashMap<String, StockPrice>() {{
-            allStocks.forEach(stock -> put(stock, getStockPrice(stock)));
-        }});
+        if (latestOptional.isPresent()) {
+            return latestOptional.map(StockPrice::getPrice).get();
+        }
+
+        return null;
     }
 
     @Override
@@ -95,14 +62,24 @@ public class StockServiceImpl implements StockService {
         }};
     }
 
-    // Old school java time :)
-    private Date stripTime(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
+    @Override
+    @Transactional
+    public void update(String stock, Date date, BigDecimal price) {
+        Optional<StockPrice> priceOptional = stockPriceRepository
+          .findOneByStockAndDate(stock, date);
+
+        if (priceOptional.isPresent()) {
+            StockPrice stockPrice = priceOptional.get();
+            stockPrice.setPrice(price);
+            stockPriceRepository.save(stockPrice);
+        } else {
+            stockPriceRepository.save(
+              StockPrice.builder()
+                .stock(stock)
+                .date(date)
+                .price(price)
+                .build()
+            );
+        }
     }
 }

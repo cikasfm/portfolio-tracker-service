@@ -1,7 +1,10 @@
-package org.vilutis.lt.pts.integrations;
+package org.vilutis.lt.pts.events;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.context.ApplicationEvent;
-import org.vilutis.lt.pts.listener.TradeDTO;
 
 public class TradeEvent extends ApplicationEvent {
 
@@ -18,5 +21,16 @@ public class TradeEvent extends ApplicationEvent {
     @Override
     public TradeDTO getSource() {
         return (TradeDTO) super.getSource();
+    }
+
+    @Data
+    @Builder
+    public static class TradeDTO {
+
+        private final String stock;
+        private final BigDecimal price;
+        private final BigDecimal quantity;
+        private final Date timestamp;
+
     }
 }

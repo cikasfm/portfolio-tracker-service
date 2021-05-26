@@ -17,15 +17,18 @@ import net.jacobpeterson.domain.alpaca.marketdata.realtime.trade.TradeMessage;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
-import org.vilutis.lt.pts.listener.TradeDTO;
+import org.vilutis.lt.pts.events.TradeEvent.TradeDTO;
+import org.vilutis.lt.pts.events.TradeEvent;
 import org.vilutis.lt.pts.model.Stock;
 import org.vilutis.lt.pts.services.StockService;
 
 @Component
 @Slf4j
+@ConditionalOnProperty({"alpaca.api.key", "alpaca.api.secret"})
 public class AlpacaStreamingClient implements InitializingBean, ApplicationEventPublisherAware {
 
     private final AlpacaAPI alpacaAPI;

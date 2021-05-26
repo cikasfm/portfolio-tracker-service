@@ -1,5 +1,9 @@
 package org.vilutis.lt.pts.services;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.vilutis.lt.pts.model.Stock;
@@ -11,15 +15,37 @@ import org.vilutis.lt.pts.model.StockPrice;
 public interface StockService {
 
     /**
-     * Provides current ( latest ) stock prices by stock
+     * Provides current ( latest ) stock prices
      * @param stocks
+     */
+    default Map<String, BigDecimal> getCurrentPrices(List<String> stocks) {
+        return new HashMap<String, BigDecimal>(){{
+            stocks.stream().map(s -> put(s, getCurrentPrice(s)));
+        }};
+    }
+
+    /**
+     * Provides current ( latest ) stock price by stock
+     * @param stock
      * @return
      */
-    Map<String, StockPrice> getCurrentPrices(List<String> stocks);
+    BigDecimal getCurrentPrice(String stock);
 
     /**
      * Resolves currently active stocks in the system
-     * @return
      */
     List<Stock> getActiveStocks();
+
+    // Old school java time :)
+    static Date stripTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+    void update(String stock, Date date, BigDecimal price);
 }
