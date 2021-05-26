@@ -41,17 +41,17 @@ $(document).ready(() => {
 
     $.get("/api/user", function (data) {
         $("#user").html(data.name);
-        $(".unauthenticated").hide();
-        $(".unauthenticated").removeClass("d-flex");
+        $(".unauthenticated").hide().removeClass("d-flex");
         $(".authenticated").show();
 
-        interval = setInterval(fetchPortfolio, 500);
+        fetchPortfolio().then(() => {
+            interval = setInterval(fetchPortfolio, 1_000);
+        });
     });
 
     const postLogout = () => {
         $("#user").html('');
-        $(".unauthenticated").show();
-        $(".unauthenticated").addClass("d-flex");
+        $(".unauthenticated").show().addClass("d-flex");
         $(".authenticated").hide();
         clearInterval(interval);
     };
