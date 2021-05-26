@@ -15,7 +15,7 @@ spring:
       client:
         registration:
           github:
-            redirect-uri: '{baseUrl}/login/oauth2/code/github'
+            redirect-uri: ${env.GITHUB_OAUTH_REDIRECT_URL:'{baseUrl}/login/oauth2/code/github'}
             clientId: ${env.GITHUB_CLIENT_ID}
             clientSecret: ${env.GITHUB_CLIENT_SECRET}
 
