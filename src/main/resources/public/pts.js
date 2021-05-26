@@ -47,6 +47,14 @@ $(document).ready(() => {
         fetchPortfolio().then(() => {
             interval = setInterval(fetchPortfolio, 1_000);
         });
+    }).catch( () => {
+        $.get("/error", function(data) {
+            if (data) {
+                $(".error").removeClass('d-none').addClass('fade show').children('.error-text').html(data);
+            } else {
+                $(".error").addClass('d-none').removeClass('fade show').children('.error-text').html('')
+            }
+        });
     });
 
     const postLogout = () => {

@@ -15,6 +15,11 @@
 <div class="container unauthenticated d-flex justify-content-center">
     <main class="form-signin p-5 m-5">
         <form>
+            <div class="alert alert-danger alert-dismissible error d-none">
+                <h4 class="alert-heading">Login Error</h4>
+                <p class="error-text"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <fieldset class="border border-1 rounded-3 p-5">
                 <legend>Please sign in</legend>
                 <a href="/oauth2/authorization/github" class="w-100 btn btn-lg btn-primary">Login

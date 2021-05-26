@@ -14,7 +14,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
           .authorizeRequests(a -> a
-            .antMatchers("/","/error","/webjars/**").permitAll()
+            .antMatchers("/", "/error", "/webjars/**").permitAll()
             // forces to authorize before accessing "/api/"
             .antMatchers("/api/**").authenticated()
           )
@@ -25,6 +25,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
           )
           .csrf(c -> c
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+          )
+          .oauth2Login(o -> o
+            .failureHandler((request, response, exception) -> {
+                request.getSession().setAttribute("error.message", exception.getMessage());
+                response.sendRedirect("/");
+            })
           )
           .exceptionHandling(e -> e
             .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

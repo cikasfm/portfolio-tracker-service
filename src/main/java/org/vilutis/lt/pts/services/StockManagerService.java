@@ -2,7 +2,6 @@ package org.vilutis.lt.pts.services;
 
 import static org.vilutis.lt.pts.services.api.StockService.stripTime;
 
-import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import java.math.BigDecimal;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.vilutis.lt.pts.dto.StockPriceAlertDTO;
 import org.vilutis.lt.pts.dto.TradeDTO;
 import org.vilutis.lt.pts.events.TradeEvent;
-import org.vilutis.lt.pts.model.StockPrice;
 import org.vilutis.lt.pts.services.api.StockService;
 
 @Service
@@ -89,7 +87,6 @@ public class StockManagerService {
             if (alertDTO != null && !alertDTO.isIncreaseAlertSent()) {
                 // trigger alert
                 alertDTO.setIncreaseAlertSent(true);
-                // TODO : update value in DB
                 alertService.priceIncreased(trade, previousPrice, alertThreshold);
                 stockService.setIncreaseAlertSent(stock, alertDTO.getDate());
             }
@@ -101,7 +98,6 @@ public class StockManagerService {
             if (alertDTO != null && !alertDTO.isDecreaseAlertSent()) {
                 // trigger alert
                 alertDTO.setDecreaseAlertSent(true);
-                // TODO : update value in DB
                 alertService.priceDecreased(trade, previousPrice, alertThreshold);
                 stockService.setDecreaseAlertSent(stock, alertDTO.getDate());
             }
