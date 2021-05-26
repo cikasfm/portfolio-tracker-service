@@ -15,6 +15,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
           .authorizeRequests(a -> a
             .antMatchers("/","/error","/webjars/**").permitAll()
+            // forces to authorize before accessing "/api/"
             .antMatchers("/api/**").authenticated()
           )
           .logout(l -> l

@@ -1,19 +1,11 @@
 $(document).ready(() => {
 
-    const auth = {
-        authenticated: false,
-        provider: "github"
-    };
-
     $.ajaxSetup({
         beforeSend: function (xhr, settings) {
-            if (settings.type == 'POST' || settings.type == 'PUT'
-                || settings.type == 'DELETE') {
-                if (!(/^http:.*/.test(settings.url) || /^https:.*/
-                    .test(settings.url))) {
+            if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE') {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
                     // Only send the token to relative URLs i.e. locally.
-                    xhr.setRequestHeader("X-XSRF-TOKEN",
-                        Cookies.get('XSRF-TOKEN'));
+                    xhr.setRequestHeader("X-XSRF-TOKEN", Cookies.get('XSRF-TOKEN'));
                 }
             }
         }
@@ -26,12 +18,12 @@ $(document).ready(() => {
 
     let interval;
 
-    const updateUI = () => fetch('/api/portfolio')
+    const fetchPortfolio = () => fetch('/api/portfolio')
         .then(response => {
             if (response.status == 200) {
                 return response.json();
             }
-            throw new Error(response.text());
+            throw new Error(response.status + " " + response.statusText);
         })
         .then(data => {
             console.log(data);
@@ -44,21 +36,22 @@ $(document).ready(() => {
         })
         .catch(error => {
             console.error("Fetch error:", JSON.stringify(error));
-            auth.authenticated = false;
             clearInterval(interval);
         });
 
     $.get("/api/user", function (data) {
         $("#user").html(data.name);
         $(".unauthenticated").hide();
+        $(".unauthenticated").removeClass("d-flex");
         $(".authenticated").show();
-        auth.authenticated = true;
-        interval = setInterval(updateUI, 500);
+
+        interval = setInterval(fetchPortfolio, 500);
     });
 
     const postLogout = () => {
         $("#user").html('');
         $(".unauthenticated").show();
+        $(".unauthenticated").addClass("d-flex");
         $(".authenticated").hide();
         clearInterval(interval);
     };
