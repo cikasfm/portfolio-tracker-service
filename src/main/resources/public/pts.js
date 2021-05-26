@@ -28,7 +28,7 @@ $(document).ready(() => {
 
     const updateUI = () => fetch('/api/portfolio')
         .then(response => {
-            if ( response.status == 200) {
+            if (response.status == 200) {
                 return response.json();
             }
             throw new Error(response.text());
@@ -36,7 +36,7 @@ $(document).ready(() => {
         .then(data => {
             console.log(data);
             $('#portfolio').html(tplHoldings(data));
-            if ( firstTime ) {
+            if (firstTime) {
                 $('#purchases').html(tplTrades({trades: data.purchases}));
                 $('#liquidations').html(tplTrades({trades: data.liquidations}));
                 firstTime = false;
@@ -48,21 +48,23 @@ $(document).ready(() => {
             clearInterval(interval);
         });
 
-    $.get("/api/user", function(data) {
+    $.get("/api/user", function (data) {
         $("#user").html(data.name);
         $(".unauthenticated").hide();
         $(".authenticated").show();
         auth.authenticated = true;
-        interval = setInterval(updateUI,500);
+        interval = setInterval(updateUI, 500);
     });
 
-    $('#logout').click(() => $.post("/logout", function () {
+    const postLogout = () => {
         $("#user").html('');
         $(".unauthenticated").show();
         $(".authenticated").hide();
         clearInterval(interval);
-    })
-        .catch()
-    );
+    };
+
+    $('#logout').click(() => $.post("/logout")
+        .then(postLogout)
+        .catch(postLogout));
 
 });
