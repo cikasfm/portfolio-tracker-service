@@ -11,5 +11,5 @@ import org.vilutis.lt.pts.model.Account;
 @Profile("!mock")
 public interface AccountRepository extends CrudRepository<Account, String> {
 
-    Optional<Account> findOneByName(@Param("accountName") String accountName);
+    Optional<Account> findOneByAccountName(@Param("accountName") String accountName);
 }

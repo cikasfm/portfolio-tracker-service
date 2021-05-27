@@ -48,8 +48,6 @@ public class MockTradeGenerator implements InitializingBean, ApplicationEventPub
     public void afterPropertiesSet() throws Exception {
         run.set(true);
         final LinkedList<Stock> activeStocks = new LinkedList<>(stockService.getActiveStocks());
-        List<String> stocks = activeStocks.stream().map(Stock::getStock)
-          .collect(Collectors.toList());
 
         new Thread(() -> {
             ThreadLocalRandom random = ThreadLocalRandom.current();

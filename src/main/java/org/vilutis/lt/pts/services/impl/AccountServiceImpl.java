@@ -4,7 +4,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import org.vilutis.lt.pts.exception.AccountNotFoundException;
 import org.vilutis.lt.pts.model.Account;
 import org.vilutis.lt.pts.repository.AccountRepository;
 import org.vilutis.lt.pts.services.api.AccountService;
@@ -22,6 +21,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Optional<Account> getAccountByName(String accountName) {
-        return repository.findOneByName(accountName);
+        return repository.findOneByAccountName(accountName);
     }
 }
