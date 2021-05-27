@@ -1,0 +1,53 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Account *-- Holding
+Account *-- Trade
+
+Stock o-- Holding
+Stock o-- StockPrice
+Stock o-- Trade
+
+Trade -- DirectionEnum
+
+class Account {
+  accountName : String
+  accountNumber : String
+}
+
+class Stock {
+  stock : String
+  description : String
+}
+
+class StockPrice {
+  stock : String
+  date : Date
+  price : BigDecimal
+  increaseAlertSent : boolean
+  decreaseAlertSent : boolean
+}
+
+class Holding {
+  accountNumber : String
+  stock : String
+  avgPrice : BigDecimal
+  quantity : BigDecimal
+}
+
+class Trade {
+  txId : Long
+  timestamp : Date
+  stock : String
+  direction : DirectionEnum
+  price : BigDecimal
+  quantity : BigDecimal
+  getValue() : BigDecimal
+}
+
+enum DirectionEnum {
+  BUY
+  SELL
+}
+
+@enduml

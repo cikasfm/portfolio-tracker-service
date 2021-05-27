@@ -12,3 +12,9 @@ Following use cases need to be considered to understand the requirement better.
 2. Reflect purchase of new stocks
 3. Reflect liquidation of some stocks
 4. Alert on big move as defined (> 10% )
+
+# Implementation
+
+## Simplified Domain Model
+
+![model](model.png)

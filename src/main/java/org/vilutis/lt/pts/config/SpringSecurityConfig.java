@@ -14,7 +14,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
           .authorizeRequests(a -> a
-            .antMatchers("/", "/error", "/webjars/**").permitAll()
+            .antMatchers(
+              "/", "/error", "/webjars/**",
+              "/api-docs", "/swagger-ui/*" // swagger-ui endpoints
+            ).permitAll()
             // forces to authorize before accessing "/api/"
             .antMatchers("/api/**").authenticated()
           )
@@ -34,8 +37,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
           )
           .exceptionHandling(e -> e
             .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-          )
-          .oauth2Login();
+          );
     }
 
 }
